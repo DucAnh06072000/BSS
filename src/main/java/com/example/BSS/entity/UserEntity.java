@@ -28,7 +28,7 @@ public class UserEntity {
     private String address;
 
     @JsonProperty("service_used")
-    private String serviceUsed;
+    private Instant serviceUsed;
 
     @JsonProperty("create_at")
     private Instant createAt;
@@ -37,7 +37,7 @@ public class UserEntity {
     private Instant updateAt;
 
     @JsonProperty("contract_status")
-    private String contractStatus;
+    private int contractStatus;
 
     @JsonProperty("folk")
     private String folk;
@@ -55,7 +55,7 @@ public class UserEntity {
     private String documentType;
 
     @JsonProperty("document_create")
-    private String documentCreate;
+    private Instant documentCreate;
 
     @JsonProperty("document_address")
     private String documentAddress;
@@ -65,4 +65,16 @@ public class UserEntity {
 
     @JsonProperty("email")
     private String email;
+
+    @JsonProperty("user_status")
+    private int userStatus;
+
+    @JsonProperty("representative")
+    private String representative;
+
+    @JsonProperty("representative_address")
+    private String representativeAddress;
+
+    @JsonProperty("representative_phone")
+    private String representativePhone;
 }
