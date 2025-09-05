@@ -5,15 +5,13 @@ import com.example.BSS.entity.UserEntity;
 import com.example.BSS.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -38,6 +36,20 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .header("X-Error", "No users found")
                     .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+        }
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public ResponseEntity<ApiResponse<UserEntity>> updateCustomer(@PathVariable Long id, @RequestBody UserEntity user) {
+        Optional<UserEntity> updated = userService.updateCustomer(id, user);
+        if (updated.isPresent()) {
+            ApiResponse<UserEntity> response =
+                    new ApiResponse<>(200, "Cập nhật thành công", updated.get());
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .header("X-Error", "No users found")
+                    .body(new ApiResponse<>(404, "Lỗi không update thành công", null));
         }
     }
 }
