@@ -35,11 +35,11 @@ public class UserEntity {
     @JsonProperty("update_at")
     private Instant updateAt;
 
-    @JsonIgnore
+    @JsonProperty("contract_status")
     private int contractStatus;
 
-    @Transient
-    private String contractStatusText;
+//    @Transient
+//    private String contractStatusText;
 
     @JsonProperty("folk")
     private String folk;
@@ -71,11 +71,11 @@ public class UserEntity {
     @JsonProperty("email")
     private String email;
 
-    @JsonIgnore
+    @JsonProperty("user_status")
     private int userStatus;
 
-    @Transient
-    private String userStatusText;
+//    @Transient
+//    private String userStatusText;
 
     @JsonProperty("representative")
     private String representative;
