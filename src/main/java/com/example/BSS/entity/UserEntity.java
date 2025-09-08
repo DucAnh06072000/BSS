@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "user")
@@ -57,7 +58,7 @@ public class UserEntity {
     private String documentType;
 
     @JsonProperty("document_create")
-    private Instant documentCreate;
+    private LocalDate documentCreate;
 
     @JsonProperty("document_address")
     private String documentAddress;
@@ -91,7 +92,7 @@ public class UserEntity {
     private String sex;
 
     @JsonProperty("expiration_at")
-    private Instant expirationAt;
+    private LocalDate  expirationAt;
 
     public String getRole() {
         return role;
@@ -225,7 +226,7 @@ public class UserEntity {
         this.documentType = documentType;
     }
 
-    public void setDocumentCreate(Instant documentCreate) {
+    public void setDocumentCreate(LocalDate  documentCreate) {
         this.documentCreate = documentCreate;
     }
 
@@ -329,7 +330,7 @@ public class UserEntity {
         return documentType;
     }
 
-    public Instant getDocumentCreate() {
+    public LocalDate  getDocumentCreate() {
         return documentCreate;
     }
 
@@ -369,11 +370,11 @@ public class UserEntity {
         this.sex = sex;
     }
 
-    public Instant getExpirationAt() {
+    public LocalDate  getExpirationAt() {
         return expirationAt;
     }
 
-    public void setExpirationAt(Instant expirationAt) {
+    public void setExpirationAt(LocalDate  expirationAt) {
         this.expirationAt = expirationAt;
     }
 }

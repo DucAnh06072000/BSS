@@ -25,6 +25,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<UserEntity> getCustomerById(Long id) {
+        return userRepository.findById(id);
+    }
+
+
     public Long getNumberCompany() {
         List<UserEntity> user = getAllUsers();
         return user.stream().filter(data -> {
@@ -75,8 +80,8 @@ public class UserService {
 
     // lấy ra khách hàng sắp hết hạn
     public List<UserEntity> getUsersNearExpiration() {
-        Instant now = Instant.now();
-        Instant threshold = now.plus(30, ChronoUnit.DAYS);
+        LocalDate  now = LocalDate .now();
+        LocalDate  threshold = now.plus(30, ChronoUnit.DAYS);
         return getAllUsers().stream()
                 .filter(user -> user.getExpirationAt() != null
                         && !user.getExpirationAt().isBefore(now)

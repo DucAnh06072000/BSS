@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
@@ -28,7 +27,7 @@ public class UserController {
     }
 
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping(value = "/getInfoContract", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<Map<String, Long>>> getInfoContract() {
         Long data = userService.getNumberCompany();
@@ -42,7 +41,7 @@ public class UserController {
 
 
     //lấy ra khách hàng sắp hết hạn
-    @CrossOrigin(origins = "*")
+
     @GetMapping(value = "/getUserWarning", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserEntity>>> getUserWaring() {
         List<UserEntity> data = userService.getUsersNearExpiration();
@@ -59,7 +58,7 @@ public class UserController {
 
 
     // lấy ra khách hàng tạo trong quý này
-    @CrossOrigin(origins = "*")
+
     @GetMapping(value = "/khachhang/quy-nay", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserEntity>>> getUsersInCurrentQuarter() {
         List<UserEntity> users = userService.getUsersInCurrentQuarter();
@@ -74,7 +73,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserEntity>>> getUser() {
         List<UserEntity> user = userService.getAllUsers();
@@ -102,4 +101,18 @@ public class UserController {
                     .body(new ApiResponse<>(404, "Lỗi không update thành công", null));
         }
     }
+    @GetMapping("/customers/{id}")
+    public ResponseEntity<ApiResponse<UserEntity>> getCustomerById(@PathVariable Long id) {
+        Optional<UserEntity> customer = userService.getCustomerById(id);
+
+        if (customer.isPresent()) {
+            ApiResponse<UserEntity> response =
+                    new ApiResponse<>(200, "Thành công", customer.get());
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(404, "Không tìm thấy khách hàng", null));
+        }
+    }
+
 }
