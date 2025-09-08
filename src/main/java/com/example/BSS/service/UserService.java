@@ -105,6 +105,9 @@ public class UserService {
             if (updateData.getDocumentEnd() != null) userEntity.setDocumentEnd(updateData.getDocumentEnd());
             if (updateData.getTaxCode() != null) userEntity.setTaxCode(updateData.getTaxCode());
             if (updateData.getRole() != null) userEntity.setRole(updateData.getRole());
+            if (updateData.getBirthday()!=null) userEntity.setBirthday(updateData.getBirthday());
+            if (updateData.getPlkhCode()!=null) userEntity.setPlkhCode(updateData.getPlkhCode());
+            if (updateData.getPlaceResidence()!=null) userEntity.setPlaceResidence(updateData.getPlaceResidence());
             userEntity.setUpdateAt(Instant.now());
             return userRepository.save(userEntity);
         });
