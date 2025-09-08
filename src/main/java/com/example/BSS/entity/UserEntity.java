@@ -104,6 +104,61 @@ public class UserEntity {
     @JsonProperty("role")
     private String role;
 
+    @JsonProperty("plkh_code")
+    private String plkhCode;
+
+    @JsonProperty("hometown")
+    private String hometown;
+
+    @JsonProperty("place_residence")
+    private String placeResidence;
+
+    @JsonProperty("birthday")
+    private String birthday;
+
+    @JsonProperty("document_number")
+    private String documentNumber;
+
+
+    public String getPlkhCode() {
+        return plkhCode;
+    }
+
+    public void setPlkhCode(String plkhCode) {
+        this.plkhCode = plkhCode;
+    }
+
+    public String getHometown() {
+        return hometown;
+    }
+
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
+    }
+
+    public String getPlaceResidence() {
+        return placeResidence;
+    }
+
+    public void setPlaceResidence(String placeResidence) {
+        this.placeResidence = placeResidence;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
+    }
 
     public void setId(Long id) {
         this.id = id;

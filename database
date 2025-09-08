@@ -1,0 +1,94 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Sep 08, 2025 at 06:44 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bss`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `folk` varchar(255) DEFAULT NULL,
+  `nation` varchar(255) DEFAULT NULL,
+  `job` varchar(255) DEFAULT NULL,
+  `tax_code` varchar(100) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `contract_status` tinyint(1) DEFAULT NULL,
+  `create_at` datetime DEFAULT NULL,
+  `document_address` varchar(255) DEFAULT NULL,
+  `document_create` datetime DEFAULT NULL,
+  `document_end` varchar(100) NOT NULL,
+  `document_type` varchar(255) DEFAULT NULL,
+  `service_code` varchar(255) DEFAULT NULL,
+  `service_used` timestamp NULL DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `user_type` varchar(255) DEFAULT NULL,
+  `user_status` tinyint(1) NOT NULL,
+  `representative` varchar(100) NOT NULL,
+  `representative_address` varchar(255) NOT NULL,
+  `representative_phone` varchar(10) NOT NULL,
+  `sex` varchar(10) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `expiration_at` datetime NOT NULL,
+  `plkh_code` varchar(100) NOT NULL,
+  `hometown` varchar(100) NOT NULL,
+  `place_residence` varchar(100) NOT NULL,
+  `birthday` date NOT NULL,
+  `document_number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `phone`, `address`, `folk`, `nation`, `job`, `tax_code`, `email`, `contract_status`, `create_at`, `document_address`, `document_create`, `document_end`, `document_type`, `service_code`, `service_used`, `update_at`, `user_type`, `user_status`, `representative`, `representative_address`, `representative_phone`, `sex`, `role`, `expiration_at`, `plkh_code`, `hometown`, `place_residence`, `birthday`, `document_number`) VALUES
+(1, 'Nguyễn Đình Duy', '0348067792', 'Phú Thọ', 'dsds', 'Việt Nam', 'CNTT', 'Việt Nam\r\n', 'anhnd11@vnpay.vn', 1, '2025-09-04 00:26:28', 'Hải Dương - Ninh Bình', '2025-09-05 22:08:43', '', NULL, '001', '2025-09-04 15:09:06', '2025-09-05 17:42:39', '1', 0, '', '', '0348067792', '', '', '2025-10-09 21:09:51', '', '', '', '0000-00-00', 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
