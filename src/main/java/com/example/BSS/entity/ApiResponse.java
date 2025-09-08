@@ -35,12 +35,4 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        return "ApiResponse{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
-    }
 }

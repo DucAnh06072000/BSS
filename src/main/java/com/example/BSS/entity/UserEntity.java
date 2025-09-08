@@ -90,6 +90,9 @@ public class UserEntity {
     @JsonProperty("sex")
     private String sex;
 
+    @JsonProperty("expiration_at")
+    private Instant expirationAt;
+
     public String getRole() {
         return role;
     }
@@ -309,5 +312,13 @@ public class UserEntity {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public Instant getExpirationAt() {
+        return expirationAt;
+    }
+
+    public void setExpirationAt(Instant expirationAt) {
+        this.expirationAt = expirationAt;
     }
 }

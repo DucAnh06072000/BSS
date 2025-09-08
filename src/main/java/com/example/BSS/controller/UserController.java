@@ -10,8 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,6 +25,53 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/getInfoContract", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<Map<String, Long>>> getInfoContract() {
+        Long data = userService.getNumberCompany();
+        Long personal = userService.getPersonal();
+        Map<String, Long> result = new HashMap<>();
+        result.put("company", data);
+        result.put("personal", personal);
+        ApiResponse<Map<String, Long>> response = new ApiResponse<>(200, "Thành công", result);
+        return ResponseEntity.ok().body(response);
+    }
+
+
+    //lấy ra khách hàng sắp hết hạn
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/getUserWarning", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<List<UserEntity>>> getUserWaring() {
+        List<UserEntity> data = userService.getUsersNearExpiration();
+        if (data != null && !data.isEmpty()) {
+            ApiResponse<List<UserEntity>> response = new ApiResponse<List<UserEntity>>(200, "Thành công", data);
+            return ResponseEntity.ok()
+                    .body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .header("X-Error", "No users found")
+                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+        }
+    }
+
+
+    // lấy ra khách hàng tạo trong quý này
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/khachhang/quy-nay", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<List<UserEntity>>> getUsersInCurrentQuarter() {
+        List<UserEntity> users = userService.getUsersInCurrentQuarter();
+
+        if (!users.isEmpty()) {
+            ApiResponse<List<UserEntity>> response = new ApiResponse<>(200, "Thành công", users);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .header("X-Error", "No users found in current quarter")
+                    .body(new ApiResponse<>(404, "Không tìm thấy user trong quý này", null));
+        }
     }
 
     @CrossOrigin(origins = "*")
