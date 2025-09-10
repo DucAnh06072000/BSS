@@ -27,7 +27,7 @@ public class UserController {
     }
 
 
-
+    // lấy ra khách hàng cá nhân hoặc doanh nghiệp
     @GetMapping(value = "/getInfoContract", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<Map<String, Long>>> getInfoContract() {
         Long data = userService.getNumberCompany();
@@ -62,7 +62,6 @@ public class UserController {
     @GetMapping(value = "/khachhang/quy-nay", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserEntity>>> getUsersInCurrentQuarter() {
         List<UserEntity> users = userService.getUsersInCurrentQuarter();
-
         if (!users.isEmpty()) {
             ApiResponse<List<UserEntity>> response = new ApiResponse<>(200, "Thành công", users);
             return ResponseEntity.ok(response);
@@ -101,6 +100,7 @@ public class UserController {
                     .body(new ApiResponse<>(404, "Lỗi không update thành công", null));
         }
     }
+
     @GetMapping("/customers/{id}")
     public ResponseEntity<ApiResponse<UserEntity>> getCustomerById(@PathVariable Long id) {
         Optional<UserEntity> customer = userService.getCustomerById(id);
@@ -114,5 +114,9 @@ public class UserController {
                     .body(new ApiResponse<>(404, "Không tìm thấy khách hàng", null));
         }
     }
+
+
+    // lấy ra danh sách ưu đãi
+
 
 }

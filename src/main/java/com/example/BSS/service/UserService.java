@@ -1,6 +1,7 @@
 package com.example.BSS.service;
 
 import com.example.BSS.callback.UserRepository;
+import com.example.BSS.entity.PromotionEntity;
 import com.example.BSS.entity.UserEntity;
 import org.springframework.stereotype.Service;
 

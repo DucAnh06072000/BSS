@@ -92,7 +92,7 @@ public class UserEntity {
     private String sex;
 
     @JsonProperty("expiration_at")
-    private LocalDate  expirationAt;
+    private LocalDate expirationAt;
 
     public String getRole() {
         return role;
@@ -115,7 +115,7 @@ public class UserEntity {
     private String placeResidence;
 
     @JsonProperty("birthday")
-    private String birthday;
+    private Instant birthday;
 
     @JsonProperty("document_number")
     private String documentNumber;
@@ -145,11 +145,12 @@ public class UserEntity {
         this.placeResidence = placeResidence;
     }
 
-    public String getBirthday() {
+
+    public Instant getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Instant birthday) {
         this.birthday = birthday;
     }
 
@@ -226,7 +227,7 @@ public class UserEntity {
         this.documentType = documentType;
     }
 
-    public void setDocumentCreate(LocalDate  documentCreate) {
+    public void setDocumentCreate(LocalDate documentCreate) {
         this.documentCreate = documentCreate;
     }
 
@@ -330,7 +331,7 @@ public class UserEntity {
         return documentType;
     }
 
-    public LocalDate  getDocumentCreate() {
+    public LocalDate getDocumentCreate() {
         return documentCreate;
     }
 
@@ -370,11 +371,11 @@ public class UserEntity {
         this.sex = sex;
     }
 
-    public LocalDate  getExpirationAt() {
+    public LocalDate getExpirationAt() {
         return expirationAt;
     }
 
-    public void setExpirationAt(LocalDate  expirationAt) {
+    public void setExpirationAt(LocalDate expirationAt) {
         this.expirationAt = expirationAt;
     }
 }
