@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2025 at 07:20 PM
+-- Generation Time: Sep 15, 2025 at 05:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -58,16 +58,17 @@ CREATE TABLE `promotions` (
   `status` int(11) NOT NULL,
   `txn_min_amount` float NOT NULL,
   `discount_amount` float NOT NULL,
-  `expiration_at_voucher` datetime NOT NULL,
-  `type_customer` varchar(100) NOT NULL
+  `expiration_at_voucher` date NOT NULL,
+  `type_customer` varchar(100) NOT NULL,
+  `service_type` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `promotions`
 --
 
-INSERT INTO `promotions` (`id`, `voucher_code`, `user_apply`, `count`, `name`, `description`, `status`, `txn_min_amount`, `discount_amount`, `expiration_at_voucher`, `type_customer`) VALUES
-(1, 'HIBANMOI', '', 100, 'Ưu đãi cho khách hàng mới', 'Giảm 20% tối đa 100k cho khách hàng mới', 1, 6000000, 500000, '2025-09-26 22:58:38', '');
+INSERT INTO `promotions` (`id`, `voucher_code`, `user_apply`, `count`, `name`, `description`, `status`, `txn_min_amount`, `discount_amount`, `expiration_at_voucher`, `type_customer`, `service_type`) VALUES
+(1, '', '0348067792,0348557759', 100, 'Giảm giá kịch sàn 20%', 'Giảm 20% tối đa 100k cho khách hàng gia hạn hợp đồng', 1, 0, 0, '2025-09-16', '', '');
 
 -- --------------------------------------------------------
 
@@ -87,14 +88,14 @@ CREATE TABLE `user` (
   `tax_code` varchar(100) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `contract_status` tinyint(1) DEFAULT NULL,
-  `create_at` datetime DEFAULT NULL,
+  `create_at` date DEFAULT NULL,
   `document_address` varchar(255) DEFAULT NULL,
-  `document_create` datetime DEFAULT NULL,
+  `document_create` date DEFAULT NULL,
   `document_end` varchar(100) NOT NULL,
   `document_type` varchar(255) DEFAULT NULL,
   `service_code` varchar(255) DEFAULT NULL,
   `service_used` timestamp NULL DEFAULT NULL,
-  `update_at` datetime DEFAULT NULL,
+  `update_at` date DEFAULT NULL,
   `user_type` varchar(255) DEFAULT NULL,
   `user_status` tinyint(1) NOT NULL,
   `representative` varchar(100) NOT NULL,
@@ -102,7 +103,7 @@ CREATE TABLE `user` (
   `representative_phone` varchar(10) NOT NULL,
   `sex` varchar(10) NOT NULL,
   `role` varchar(100) NOT NULL,
-  `expiration_at` datetime NOT NULL,
+  `expiration_at` date NOT NULL,
   `plkh_code` varchar(100) NOT NULL,
   `hometown` varchar(100) NOT NULL,
   `place_residence` varchar(100) NOT NULL,
@@ -115,7 +116,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `id_user`, `name`, `phone`, `address`, `folk`, `nation`, `job`, `tax_code`, `email`, `contract_status`, `create_at`, `document_address`, `document_create`, `document_end`, `document_type`, `service_code`, `service_used`, `update_at`, `user_type`, `user_status`, `representative`, `representative_address`, `representative_phone`, `sex`, `role`, `expiration_at`, `plkh_code`, `hometown`, `place_residence`, `birthday`, `document_number`) VALUES
-(1, 'M1', 'Nguyễn Đình Duy', '0348067792', 'Phú Thọ', 'dsds', 'Việt Nam', 'CNTT', 'Việt Nam\r\n', 'anhnd11@vnpay.vn', 1, '2025-09-04 00:26:28', 'Hải Dương - Ninh Bình', '2025-09-05 00:00:00', '', NULL, '001', '2025-09-04 15:09:06', '2025-09-09 16:41:05', '1', 0, '', '', '0348067792', '', '', '2025-09-20 00:00:00', '', '', '', '2025-09-15', 0);
+(1, 'M1', 'Nguyễn Đình Duy', '0348557759', 'Phú Thọ', 'dsds', 'Việt Nam', 'CNTT', 'Việt Nam\r\n', 'anhnd11@vnpay.vn', 1, '2025-09-04', 'Hải Dương - Ninh Bình', '2025-09-05', '', NULL, '001', '2025-09-04 15:09:06', '2025-09-09', '1', 0, '', '', '0348067792', '', '', '2025-09-20', '', '', '', '2025-09-15', 0),
+(2, 'M2', 'Nguyễn Đức Anh', '0348067792', 'Vĩnh Phúc', 'ds', 'Việt Nam', 'Develop android', '', 'anhnd11@vnpay.vn', 1, '2025-09-11', 'Vĩnh Phúc', '2025-09-15', '', NULL, '002', '2025-10-22 13:49:07', '2025-10-16', '1', 0, '', '', '0348067792', '', '', '2025-09-15', '', '', '', '0000-00-00', 0);
 
 --
 -- Indexes for dumped tables
@@ -159,7 +161,7 @@ ALTER TABLE `promotions`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
