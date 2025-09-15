@@ -44,6 +44,9 @@ public class PromotionEntity {
     @JsonProperty("type_customer")
     private String typeCustomer;
 
+    @JsonProperty("service_type")
+    private String serviceType;
+
 
     public Long getId() {
         return id;
@@ -131,5 +134,13 @@ public class PromotionEntity {
 
     public void setTypeCustomer(String typeCustomer) {
         this.typeCustomer = typeCustomer;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 }

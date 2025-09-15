@@ -20,9 +20,11 @@ public class PromotionController {
 
     private static final Logger log = LoggerFactory.getLogger(PromotionController.class);
     private final PromotionService promotionService;
+    private final UserService userService;
 
-    public PromotionController(PromotionService promotionService) {
+    public PromotionController(PromotionService promotionService, UserService userService) {
         this.promotionService = promotionService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "/getPromotion", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,11 +55,10 @@ public class PromotionController {
 //            "expiration_at_voucher":"2025-09-26 11:58:38",
 //            "type_customer":""
 //    }
+    // các trường bắt buộc voucherCode, Description, name,DiscountAmount, TxnMinAmount,ExpirationAtVoucher
     @PostMapping(value = "/insertPromotion", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<PromotionEntity>>> insertPromotion(@RequestBody PromotionEntity promotion) {
-        if (promotion.getUserApply().trim().isEmpty() ||
-                promotion.getVoucherCode().trim().isEmpty() ||
-                promotion.getTypeCustomer().trim().isEmpty() ||
+        if (promotion.getVoucherCode().trim().isEmpty() ||
                 promotion.getDescription().trim().isEmpty() ||
                 promotion.getName().trim().isEmpty() ||
                 promotion.getDiscountAmount() != 0 ||
@@ -95,8 +96,21 @@ public class PromotionController {
         }
     }
 
+    @PostMapping(value = "/detailPromotionOfUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<List<UserEntity>>> getDetailUserPromotion(@RequestParam("user_apply") String userApply) {
+        List<UserEntity> data = userService.getUserOfPhone(userApply);
+        if (data != null) {
+            ApiResponse<List<UserEntity>> response = new ApiResponse<List<UserEntity>>(200, "Thành công", data);
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+        }
+    }
+
     // api xoá ưu đãi
     @PostMapping(value = "/removePromotion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<ApiResponse<List<PromotionEntity>>> removePromotion(@PathVariable Long id) {
         boolean update = promotionService.removePromotion(id);
         if (update) {

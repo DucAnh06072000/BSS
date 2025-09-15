@@ -24,19 +24,25 @@ public class PromotionService {
         return promotionRepository.save(insert);
     }
 
+
     public Optional<PromotionEntity> updatePromotion(Long id, PromotionEntity update) {
         return promotionRepository.findById(id).map(promotion -> {
-            if (promotion.getUserApply() != null) promotion.setUserApply(update.getUserApply());
-            if (promotion.getVoucherCode() != null) promotion.setVoucherCode(update.getVoucherCode());
-            if (promotion.getTypeCustomer() != null) promotion.setTypeCustomer(update.getTypeCustomer());
-            if (promotion.getDescription() != null) promotion.setDescription(update.getDescription());
-            if (promotion.getName() != null) promotion.setName(update.getName());
-            if (promotion.getDiscountAmount() != 0) promotion.setDiscountAmount(update.getDiscountAmount());
-            if (promotion.getTxnMinAmount() != 0) promotion.setTxnMinAmount(update.getTxnMinAmount());
-            if (promotion.getExpirationAtVoucher() != null)
-                promotion.setExpirationAtVoucher(update.getExpirationAtVoucher());
+            if (update.getUserApply() != null) promotion.setUserApply(update.getUserApply());
+            if (update.getCount() != 0) promotion.setCount(update.getCount());
+            if (update.getVoucherCode() != null) promotion.setVoucherCode(update.getVoucherCode());
+            if (update.getTypeCustomer() != null) promotion.setTypeCustomer(update.getTypeCustomer());
+            if (update.getDescription() != null) promotion.setDescription(update.getDescription());
+            if (update.getName() != null) promotion.setName(update.getName());
+            if (update.getDiscountAmount() != 0) promotion.setDiscountAmount(update.getDiscountAmount());
+            if (update.getTxnMinAmount() != 0) promotion.setTxnMinAmount(update.getTxnMinAmount());
+            if (update.getExpirationAtVoucher() != null) promotion.setExpirationAtVoucher(update.getExpirationAtVoucher());
+            if (update.getServiceType() != null) promotion.setServiceType(update.getServiceType());
             return promotionRepository.save(promotion);
         });
+    }
+
+    public Optional<PromotionEntity> getDetailPromotion(Long id){
+        return promotionRepository.findById(id);
     }
 
     public boolean removePromotion(Long id) {

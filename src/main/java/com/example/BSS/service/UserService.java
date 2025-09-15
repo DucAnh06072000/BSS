@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,13 +82,22 @@ public class UserService {
 
     // lấy ra khách hàng sắp hết hạn
     public List<UserEntity> getUsersNearExpiration() {
-        LocalDate  now = LocalDate .now();
-        LocalDate  threshold = now.plus(30, ChronoUnit.DAYS);
+        LocalDate now = LocalDate.now();
+        LocalDate threshold = now.plus(30, ChronoUnit.DAYS);
         return getAllUsers().stream()
                 .filter(user -> user.getExpirationAt() != null
                         && !user.getExpirationAt().isBefore(now)
                         && user.getExpirationAt().isBefore(threshold))
                 .collect(Collectors.toList());
+    }
+
+    public List<UserEntity> getUserOfPhone(String userApply) {
+        List<String> phones = Arrays.stream(userApply.split(","))
+                .map(String::trim)
+                .toList();
+        return getAllUsers().stream()
+                .filter(userEntity -> phones.contains(userEntity.getPhone()))
+                .toList();
     }
 
     public Optional<UserEntity> updateCustomer(Long id, UserEntity updateData) {
@@ -111,9 +121,9 @@ public class UserService {
             if (updateData.getDocumentEnd() != null) userEntity.setDocumentEnd(updateData.getDocumentEnd());
             if (updateData.getTaxCode() != null) userEntity.setTaxCode(updateData.getTaxCode());
             if (updateData.getRole() != null) userEntity.setRole(updateData.getRole());
-            if (updateData.getBirthday()!=null) userEntity.setBirthday(updateData.getBirthday());
-            if (updateData.getPlkhCode()!=null) userEntity.setPlkhCode(updateData.getPlkhCode());
-            if (updateData.getPlaceResidence()!=null) userEntity.setPlaceResidence(updateData.getPlaceResidence());
+            if (updateData.getBirthday() != null) userEntity.setBirthday(updateData.getBirthday());
+            if (updateData.getPlkhCode() != null) userEntity.setPlkhCode(updateData.getPlkhCode());
+            if (updateData.getPlaceResidence() != null) userEntity.setPlaceResidence(updateData.getPlaceResidence());
             userEntity.setUpdateAt(Instant.now());
             return userRepository.save(userEntity);
         });
