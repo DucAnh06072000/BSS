@@ -12,8 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class PromotionController {
@@ -41,6 +40,24 @@ public class PromotionController {
         }
     }
 
+
+    // chi tiết ưu đãi
+    @PostMapping(value = "/getDetailPromotion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getDetailPromotion(@PathVariable Long id) {
+        Optional<PromotionEntity> detailPromotion = promotionService.getDetailPromotion(id);
+        if (detailPromotion.isPresent()) {
+            List<UserEntity> data = userService.getUserOfPhone(detailPromotion.get().getUserApply());
+            Map<String, Object> result = new HashMap<>();
+            result.put("promotion", detailPromotion.get());
+            result.put("userEntity", data);
+            ApiResponse<Map<String, Object>> response = new ApiResponse<>(200, "Thành công", result);
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(404, "Không tìm thấy khách hàng", null));
+        }
+
+    }
 
     // Thêm thông tin ưu đãi
 //    {
@@ -110,7 +127,6 @@ public class PromotionController {
 
     // api xoá ưu đãi
     @PostMapping(value = "/removePromotion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-
     public ResponseEntity<ApiResponse<List<PromotionEntity>>> removePromotion(@PathVariable Long id) {
         boolean update = promotionService.removePromotion(id);
         if (update) {
