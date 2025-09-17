@@ -13,9 +13,8 @@ public class DocumentEntity {
     @JsonProperty("id")
     private Long id;
 
-
     @JsonProperty("user_code")
-    private Long userCode;
+    private String userCode;
 
 
     @JsonProperty("file_name")
@@ -38,11 +37,11 @@ public class DocumentEntity {
         this.id = id;
     }
 
-    public Long getUserCode() {
+    public String getUserCode() {
         return userCode;
     }
 
-    public void setUserCode(Long userCode) {
+    public void setUserCode(String userCode) {
         this.userCode = userCode;
     }
 

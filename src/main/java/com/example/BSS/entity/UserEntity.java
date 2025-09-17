@@ -15,6 +15,9 @@ public class UserEntity {
     @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("id_user")
+    private String idUser;
+
     @JsonProperty("name")
     private String name;
 
@@ -74,6 +77,9 @@ public class UserEntity {
 
     @JsonProperty("user_status")
     private int userStatus;
+
+    @JsonProperty("ma_tb")
+    private String maTb;
 
 //    @Transient
 //    private String userStatusText;
@@ -377,5 +383,21 @@ public class UserEntity {
 
     public void setExpirationAt(LocalDate expirationAt) {
         this.expirationAt = expirationAt;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getMaTb() {
+        return maTb;
+    }
+
+    public void setMaTb(String maTb) {
+        this.maTb = maTb;
     }
 }

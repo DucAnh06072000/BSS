@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -98,6 +99,15 @@ public class UserService {
         return getAllUsers().stream()
                 .filter(userEntity -> phones.contains(userEntity.getPhone()))
                 .toList();
+    }
+
+    public String getIdUser(Long id) {
+        for (UserEntity user : getAllUsers()) {
+            if (Objects.equals(user.getId(), id)) {
+                return user.getIdUser();
+            }
+        }
+        return null;
     }
 
     public Optional<UserEntity> updateCustomer(Long id, UserEntity updateData) {

@@ -40,22 +40,6 @@ public class UserController {
     }
 
 
-    //lấy ra khách hàng sắp hết hạn
-
-    @GetMapping(value = "/getUserWarning", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<List<UserEntity>>> getUserWaring() {
-        List<UserEntity> data = userService.getUsersNearExpiration();
-        if (data != null && !data.isEmpty()) {
-            ApiResponse<List<UserEntity>> response = new ApiResponse<List<UserEntity>>(200, "Thành công", data);
-            return ResponseEntity.ok()
-                    .body(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No users found")
-                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
-        }
-    }
-
 
     // lấy ra khách hàng tạo trong quý này
 

@@ -23,7 +23,7 @@ public class DocumentService {
     }
 
 
-    public DocumentEntity uploadFile(MultipartFile file, Long userCode) throws IOException {
+    public DocumentEntity uploadFile(MultipartFile file, String userCode) throws IOException {
         DocumentEntity doc = new DocumentEntity();
         doc.setFileData(file.getBytes());
         doc.setFileName(file.getOriginalFilename());
@@ -33,11 +33,12 @@ public class DocumentService {
     }
 
 
-    public List<DocumentEntity> getDocument(Long userCode) {
+    public List<DocumentEntity> getDocument(String userCode) {
         return documentRepository.findAll().stream().filter(data -> {
             return Objects.equals(data.getUserCode(), userCode);
         }).collect(Collectors.toList());
     }
+
 
     public DocumentEntity downloadFileById(Long id) {
         return documentRepository.findById(id).orElseThrow();
