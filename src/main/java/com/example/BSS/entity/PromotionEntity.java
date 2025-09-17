@@ -33,10 +33,10 @@ public class PromotionEntity {
     private int status;
 
     @JsonProperty("txn_min_amount")
-    private float txnMinAmount;
+    private Float txnMinAmount;
 
     @JsonProperty("discount_amount")
-    private float discountAmount;
+    private Float discountAmount;
 
     @JsonProperty("expiration_at_voucher")
     private String expirationAtVoucher;
@@ -104,7 +104,7 @@ public class PromotionEntity {
         this.status = status;
     }
 
-    public float getTxnMinAmount() {
+    public Float getTxnMinAmount() {
         return txnMinAmount;
     }
 
@@ -112,7 +112,7 @@ public class PromotionEntity {
         this.txnMinAmount = txnMinAmount;
     }
 
-    public float getDiscountAmount() {
+    public Float getDiscountAmount() {
         return discountAmount;
     }
 
