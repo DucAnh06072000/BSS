@@ -73,30 +73,33 @@ public class PromotionController {
 //            "type_customer":""
 //    }
     // các trường bắt buộc voucherCode, Description, name,DiscountAmount, TxnMinAmount,ExpirationAtVoucher
+    // các trường bắt buộc voucherCode, Description, name,DiscountAmount, TxnMinAmount,ExpirationAtVoucher
     @PostMapping(value = "/insertPromotion", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<List<PromotionEntity>>> insertPromotion(@RequestBody PromotionEntity promotion) {
-        if (promotion.getVoucherCode().trim().isEmpty() ||
-                promotion.getDescription().trim().isEmpty() ||
-                promotion.getName().trim().isEmpty() ||
-                promotion.getDiscountAmount() != 0 ||
-                promotion.getTxnMinAmount() != 0 ||
-                promotion.getExpirationAtVoucher().trim().isEmpty()
-        ) {
+    public ResponseEntity<ApiResponse<PromotionEntity>> insertPromotion(@RequestBody PromotionEntity promotion) {
+        // Kiểm tra dữ liệu đầu vào
+        if (promotion.getVoucherCode() == null || promotion.getVoucherCode().trim().isEmpty() ||
+            promotion.getDescription() == null || promotion.getDescription().trim().isEmpty() ||
+            promotion.getName() == null || promotion.getName().trim().isEmpty() ||
+            promotion.getDiscountAmount() == null || promotion.getDiscountAmount() <= 0 ||
+            promotion.getTxnMinAmount() == null || promotion.getTxnMinAmount() <= 0 ||
+            promotion.getExpirationAtVoucher() == null || promotion.getExpirationAtVoucher().trim().isEmpty()) {
+
             return ResponseEntity.badRequest()
-                    .body(new ApiResponse<>(400, "Vui lòng nhập đầy đủ thông tin", null));
+                .body(new ApiResponse<>(400, "Vui lòng nhập đầy đủ và hợp lệ thông tin", null));
         }
+
+        // Insert
         PromotionEntity insert = promotionService.insertPromotion(promotion);
-        List<PromotionEntity> user = promotionService.getAllPromotions();
+
         if (insert != null) {
-            ApiResponse<List<PromotionEntity>> response = new ApiResponse<List<PromotionEntity>>(200, "Thành công", user);
-            return ResponseEntity.ok()
-                    .body(response);
+            ApiResponse<PromotionEntity> response = new ApiResponse<>(200, "Thêm promotion thành công", insert);
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No users found")
-                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiResponse<>(500, "Không thể thêm promotion", null));
         }
     }
+
 
     //api update thông tin ưu đãi
     @PostMapping(value = "/updatePromotion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
