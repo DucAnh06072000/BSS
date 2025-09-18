@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2025 at 07:36 PM
+-- Generation Time: Sep 18, 2025 at 05:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `contract` (
   `id` int(11) NOT NULL,
   `user_code` varchar(100) NOT NULL,
+  `id_contract` varchar(100) NOT NULL,
   `file_code` int(11) NOT NULL,
   `create_at` date NOT NULL,
   `update_at` date NOT NULL,
@@ -43,8 +44,9 @@ CREATE TABLE `contract` (
 -- Dumping data for table `contract`
 --
 
-INSERT INTO `contract` (`id`, `user_code`, `file_code`, `create_at`, `update_at`, `user_created`, `effective_date`, `contract_type`, `expired_date`) VALUES
-(1, 'M1', 2, '2025-09-16', '2025-09-16', 'Trương Thị Dụ', '2025-09-20', 1, '2025-09-20');
+INSERT INTO `contract` (`id`, `user_code`, `id_contract`, `file_code`, `create_at`, `update_at`, `user_created`, `effective_date`, `contract_type`, `expired_date`) VALUES
+(1, 'M1', 'C1', 2, '2025-09-16', '2025-09-16', 'Trương Thị Dụ', '2025-09-20', 1, '2025-09-20'),
+(2, 'M1', 'C2', 2, '2025-09-19', '2025-09-19', 'Trương Thị Thu Huyền', '2025-09-19', 1, '2025-09-20');
 
 -- --------------------------------------------------------
 
@@ -94,6 +96,29 @@ CREATE TABLE `promotions` (
 
 INSERT INTO `promotions` (`id`, `voucher_code`, `user_apply`, `count`, `name`, `description`, `status`, `txn_min_amount`, `discount_amount`, `expiration_at_voucher`, `type_customer`, `service_type`) VALUES
 (1, 'HTML CCC', '1, 2', 100, 'Giảm giá kịch sàn 20%', 'Giảm 20% tối đa 100k cho khách hàng gia hạn hợp đồng', 1, 0, 0, '2025-09-16', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `service_name` varchar(200) NOT NULL,
+  `note` varchar(200) NOT NULL,
+  `create_at` date NOT NULL,
+  `update_at` date NOT NULL,
+  `id_contract` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `service_name`, `note`, `create_at`, `update_at`, `id_contract`) VALUES
+(1, 'Bảo hiểm xã hội', '', '2025-09-10', '2025-09-19', 'C1'),
+(2, 'Chữ ký số', '', '2025-09-20', '2025-09-25', 'C2');
 
 -- --------------------------------------------------------
 
@@ -168,6 +193,12 @@ ALTER TABLE `promotions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -181,7 +212,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `contract`
 --
 ALTER TABLE `contract`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `file`
@@ -193,6 +224,12 @@ ALTER TABLE `file`
 -- AUTO_INCREMENT for table `promotions`
 --
 ALTER TABLE `promotions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --

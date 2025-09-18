@@ -32,15 +32,21 @@ public class ContractService {
                 .collect(Collectors.toList());
     }
 
-    public List<ContractEntity> getContractsExpiredInRange(LocalDate startTime, LocalDate endTime) {
+    public List<ContractEntity> getContractsExpiredInRange(String userCode, LocalDate startTime, LocalDate endTime) {
         if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Khoảng thời gian không hợp lệ.");
         }
         return getAllUser().stream()
                 .filter(user -> user.getExpiredDate() != null
                         && !user.getExpiredDate().isBefore(startTime) // Ngày hết hạn không trước startTime
-                        && !user.getExpiredDate().isAfter(endTime)) // Ngày hết hạn không sau endTime
+                        && !user.getExpiredDate().isAfter(endTime)// Ngày hết hạn không sau endTime
+                        && user.getUserCode().equals(userCode)
+                )
                 .collect(Collectors.toList());
+    }
+
+    public List<ContractEntity> getContractByUserCode(String userCode) {
+        return getAllUser().stream().filter(contractEntity -> contractEntity.getUserCode().equals(userCode)).toList();
     }
 
 }

@@ -18,6 +18,9 @@ public class ContractEntity {
     @JsonProperty("user_code")
     private String userCode;
 
+    @JsonProperty("id_contract")
+    private String idContract;
+
     @JsonProperty("file_code")
     private String fileCode;
 
@@ -41,6 +44,9 @@ public class ContractEntity {
 
     @Transient
     private DocumentEntity document;
+
+    @Transient
+    private ServiceEntity service;
 
 
     public Long getId() {
@@ -121,5 +127,21 @@ public class ContractEntity {
 
     public void setDocument(DocumentEntity document) {
         this.document = document;
+    }
+
+    public String getIdContract() {
+        return idContract;
+    }
+
+    public void setIdContract(String idContract) {
+        this.idContract = idContract;
+    }
+
+    public ServiceEntity getService() {
+        return service;
+    }
+
+    public void setService(ServiceEntity service) {
+        this.service = service;
     }
 }
