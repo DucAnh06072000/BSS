@@ -134,6 +134,7 @@ public class UserService {
             if (updateData.getBirthday() != null) userEntity.setBirthday(updateData.getBirthday());
             if (updateData.getPlkhCode() != null) userEntity.setPlkhCode(updateData.getPlkhCode());
             if (updateData.getPlaceResidence() != null) userEntity.setPlaceResidence(updateData.getPlaceResidence());
+            if (updateData.getMaTb() != null) userEntity.setMaTb(updateData.getMaTb());
             userEntity.setUpdateAt(Instant.now());
             return userRepository.save(userEntity);
         });
