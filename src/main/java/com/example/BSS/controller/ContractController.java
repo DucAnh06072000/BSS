@@ -64,7 +64,7 @@ public class ContractController {
         }
     }
 
-    //api lấy ra dịch vụ tham gia theo userCode
+    //api lấy ra dịch vụ tham gia
     // Truyền userCode
     @GetMapping(value = "/getService", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<ContractEntity>>> getService(@RequestParam("userCode") String userCode) {
@@ -85,6 +85,8 @@ public class ContractController {
 
 
     // đầu vào formatTime = yyyy-MM-DD
+    // truyền userCode, startTime, endTime
+    // cảnh báo hết hạn hợp đồng
     @GetMapping(value = "/getListContractWarning", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<ContractEntity>>> getListContractWarning(@RequestParam("user_code") String userCode, @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime) {
         LocalDate startTimeStr = LocalDate.parse(startTime);

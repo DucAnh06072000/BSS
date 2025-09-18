@@ -29,6 +29,7 @@ public class ServiceController {
     }
 
     // đầu vào formatTime = yyyy-MM-DD
+    // truyền startTime, endTime
     //api tìm kiếm lịch sử giao dịch
     @GetMapping(value = "/getHistoryService", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<ServiceEntity>>> getHistory(@RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime) {
