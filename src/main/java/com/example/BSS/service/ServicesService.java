@@ -18,9 +18,8 @@ public class ServicesService {
     }
 
     public ServiceEntity getServiceID(String idContract) {
-        return servicesRepository.findAll().stream().filter(serviceEntity -> serviceEntity.getIdContract().equals(idContract)).toList().get(0);
+        return servicesRepository.findByIdContract(idContract).orElse(null);
     }
-
     public List<ServiceEntity> getHistoryService(LocalDate startTime, LocalDate endTime) {
         if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Khoảng thời gian không hợp lệ.");

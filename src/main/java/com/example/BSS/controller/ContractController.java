@@ -69,18 +69,24 @@ public class ContractController {
     @GetMapping(value = "/getService", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<ContractEntity>>> getService(@RequestParam("userCode") String userCode) {
         List<ContractEntity> listContract = contractService.getContractByUserCode(userCode);
-        if (listContract != null) {
-            List<ContractEntity> contractService = listContract.stream().peek(contractEntity -> {
-                ServiceEntity service = servicesService.getServiceID(contractEntity.getIdContract());
-                contractEntity.setService(service);
-            }).toList();
-            ApiResponse<List<ContractEntity>> response = new ApiResponse<List<ContractEntity>>(200, "Thành công", contractService);
-            return ResponseEntity.ok().body(response);
-        } else {
+
+        if (listContract == null || listContract.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No users found")
-                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+                .header("X-Error", "No contracts found")
+                .body(new ApiResponse<>(404, "Không tìm thấy hợp đồng", null));
         }
+
+        List<ContractEntity> contractWithService = listContract.stream()
+            .peek(contractEntity -> {
+                ServiceEntity service = servicesService.getServiceID(contractEntity.getIdContract());
+                contractEntity.setService(service); // service có thể null, tùy bạn xử lý
+            })
+            .toList();
+
+        ApiResponse<List<ContractEntity>> response =
+            new ApiResponse<>(200, "Thành công", contractWithService);
+
+        return ResponseEntity.ok(response);
     }
 
 
