@@ -79,7 +79,7 @@ public class ContractController {
         List<ContractEntity> contractWithService = listContract.stream()
             .peek(contractEntity -> {
                 ServiceEntity service = servicesService.getServiceID(contractEntity.getIdContract());
-                contractEntity.setService(service); // service có thể null, tùy bạn xử lý
+                contractEntity.setService(service);
             })
             .toList();
 
