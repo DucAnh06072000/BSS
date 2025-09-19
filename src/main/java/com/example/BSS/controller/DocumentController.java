@@ -48,7 +48,8 @@ public class DocumentController {
     }
 
     @PostMapping(value = "/getDocument", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<List<DocumentEntity>>> getDocument(@RequestParam("userCode") String userCode) {
+    public ResponseEntity<ApiResponse<List<DocumentEntity>>> getDocument(@RequestParam("userCode") Long id) {
+        String userCode = userService.getIdUser(id);
         List<DocumentEntity> data = documentService.getDocument(userCode);
         if (data != null && !data.isEmpty()) {
             return ResponseEntity.ok(new ApiResponse<>(200, "Thành công", data));

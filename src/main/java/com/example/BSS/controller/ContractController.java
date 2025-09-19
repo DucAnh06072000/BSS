@@ -7,6 +7,7 @@ import com.example.BSS.entity.ServiceEntity;
 import com.example.BSS.service.ContractService;
 import com.example.BSS.service.DocumentService;
 import com.example.BSS.service.ServicesService;
+import com.example.BSS.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,14 @@ public class ContractController {
     private final ContractService contractService;
     private final DocumentService documentService;
     private final ServicesService servicesService;
+    private final UserService userService;
 
 
-    public ContractController(ContractService contractService, DocumentService documentService, ServicesService servicesService) {
+    public ContractController(ContractService contractService, DocumentService documentService, ServicesService servicesService, UserService userService) {
         this.contractService = contractService;
         this.documentService = documentService;
         this.servicesService = servicesService;
+        this.userService = userService;
     }
 
     //lấy ra khách hàng sắp hết hạn
@@ -67,24 +70,24 @@ public class ContractController {
     //api lấy ra dịch vụ tham gia
     // Truyền userCode
     @GetMapping(value = "/getService", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<List<ContractEntity>>> getService(@RequestParam("userCode") String userCode) {
+    public ResponseEntity<ApiResponse<List<ContractEntity>>> getService(@RequestParam("userCode") Long id) {
+        String userCode = userService.getIdUser(id);
         List<ContractEntity> listContract = contractService.getContractByUserCode(userCode);
-
         if (listContract == null || listContract.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .header("X-Error", "No contracts found")
-                .body(new ApiResponse<>(404, "Không tìm thấy hợp đồng", null));
+                    .header("X-Error", "No contracts found")
+                    .body(new ApiResponse<>(404, "Không tìm thấy hợp đồng", null));
         }
 
         List<ContractEntity> contractWithService = listContract.stream()
-            .peek(contractEntity -> {
-                ServiceEntity service = servicesService.getServiceID(contractEntity.getIdContract());
-                contractEntity.setService(service);
-            })
-            .toList();
+                .peek(contractEntity -> {
+                    ServiceEntity service = servicesService.getServiceID(contractEntity.getIdContract());
+                    contractEntity.setService(service);
+                })
+                .toList();
 
         ApiResponse<List<ContractEntity>> response =
-            new ApiResponse<>(200, "Thành công", contractWithService);
+                new ApiResponse<>(200, "Thành công", contractWithService);
 
         return ResponseEntity.ok(response);
     }
@@ -94,7 +97,8 @@ public class ContractController {
     // truyền userCode, startTime, endTime
     // cảnh báo hết hạn hợp đồng
     @GetMapping(value = "/getListContractWarning", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<List<ContractEntity>>> getListContractWarning(@RequestParam("user_code") String userCode, @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime) {
+    public ResponseEntity<ApiResponse<List<ContractEntity>>> getListContractWarning(@RequestParam("user_code") Long id, @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime) {
+        String userCode = userService.getIdUser(id);
         LocalDate startTimeStr = LocalDate.parse(startTime);
         LocalDate endTimeStr = LocalDate.parse(endTime);
         List<ContractEntity> data = contractService.getContractsExpiredInRange(userCode, startTimeStr, endTimeStr);
