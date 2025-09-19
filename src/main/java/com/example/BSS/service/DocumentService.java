@@ -34,11 +34,8 @@ public class DocumentService {
 
 
     public List<DocumentEntity> getDocument(String userCode) {
-        return documentRepository.findAll().stream().filter(data -> {
-            return Objects.equals(data.getUserCode(), userCode);
-        }).collect(Collectors.toList());
+        return documentRepository.findByUserCode(userCode);
     }
-
 
     public DocumentEntity downloadFileById(Long id) {
         return documentRepository.findById(id).orElseThrow();

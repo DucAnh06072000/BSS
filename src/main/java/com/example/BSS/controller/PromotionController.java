@@ -129,7 +129,7 @@ public class PromotionController {
     }
 
     // api xoá ưu đãi
-    @PostMapping(value = "/removePromotion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/removePromotion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<PromotionEntity>>> removePromotion(@PathVariable Long id) {
         boolean update = promotionService.removePromotion(id);
         if (update) {

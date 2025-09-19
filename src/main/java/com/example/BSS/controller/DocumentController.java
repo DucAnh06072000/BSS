@@ -47,20 +47,17 @@ public class DocumentController {
         }
     }
 
-
-    // api lấy toàn bộ các file truyền userCode ở trong bảng File
     @PostMapping(value = "/getDocument", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<List<DocumentEntity>>> getDocument(@RequestParam("userCode") Long userCode) {
-        List<DocumentEntity> data = documentService.getDocument(userService.getIdUser(userCode));
-        if (data != null) {
-            ApiResponse<List<DocumentEntity>> response = new ApiResponse<List<DocumentEntity>>(200, "Thành công", data);
-            return ResponseEntity.ok()
-                    .body(response);
+    public ResponseEntity<ApiResponse<List<DocumentEntity>>> getDocument(@RequestParam("userCode") String userCode) {
+        List<DocumentEntity> data = documentService.getDocument(userCode);
+        if (data != null && !data.isEmpty()) {
+            return ResponseEntity.ok(new ApiResponse<>(200, "Thành công", data));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+                .body(new ApiResponse<>(404, "Không tìm thấy user hoặc không có file", null));
         }
     }
+
 
     //api download
     //id là truyền vào id của bảng file
