@@ -6,6 +6,7 @@ import com.example.BSS.entity.PromotionEntity;
 import com.example.BSS.service.DocumentService;
 import com.example.BSS.service.PromotionService;
 import com.example.BSS.service.UserService;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -55,7 +56,7 @@ public class DocumentController {
             return ResponseEntity.ok(new ApiResponse<>(200, "Thành công", data));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ApiResponse<>(404, "Không tìm thấy user hoặc không có file", null));
+                .body(new ApiResponse<>(200, "Không tìm thấy user hoặc không có file", new ArrayList<>()));
         }
     }
 
