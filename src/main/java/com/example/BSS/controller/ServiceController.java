@@ -6,7 +6,9 @@ import com.example.BSS.entity.DocumentEntity;
 import com.example.BSS.entity.ServiceEntity;
 import com.example.BSS.service.ContractService;
 import com.example.BSS.service.ServicesService;
+
 import java.util.ArrayList;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +43,7 @@ public class ServiceController {
             ApiResponse<List<ServiceEntity>> response = new ApiResponse<List<ServiceEntity>>(200, "Thành công", service);
             return ResponseEntity.ok().body(response);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No users found")
+            return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, "Không tìm thấy user", new ArrayList<>()));
         }
     }

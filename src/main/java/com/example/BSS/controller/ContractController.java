@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -62,7 +63,7 @@ public class ContractController {
                     .body(response);
         } else {
             return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, "Không tìm thấy user", null));
+                    .body(new ApiResponse<>(200, "Không tìm thấy user", new ArrayList<>()));
         }
     }
 
@@ -74,7 +75,7 @@ public class ContractController {
         List<ContractEntity> listContract = contractService.getContractByUserCode(userCode);
         if (listContract == null || listContract.isEmpty()) {
             return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, "Không tìm thấy hợp đồng", null));
+                    .body(new ApiResponse<>(200, "Không tìm thấy hợp đồng", new ArrayList<>()));
         }
 
         List<ContractEntity> contractWithService = listContract.stream()
@@ -110,9 +111,8 @@ public class ContractController {
             return ResponseEntity.ok()
                     .body(response);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No users found")
-                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, "Không tìm thấy user", new ArrayList<>()));
         }
     }
 
