@@ -61,9 +61,8 @@ public class ContractController {
             return ResponseEntity.ok()
                     .body(response);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No users found")
-                    .body(new ApiResponse<>(404, "Không tìm thấy user", null));
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, "Không tìm thấy user", null));
         }
     }
 
@@ -74,9 +73,8 @@ public class ContractController {
         String userCode = userService.getIdUser(id);
         List<ContractEntity> listContract = contractService.getContractByUserCode(userCode);
         if (listContract == null || listContract.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("X-Error", "No contracts found")
-                    .body(new ApiResponse<>(404, "Không tìm thấy hợp đồng", null));
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, "Không tìm thấy hợp đồng", null));
         }
 
         List<ContractEntity> contractWithService = listContract.stream()

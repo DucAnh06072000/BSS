@@ -55,8 +55,7 @@ public class DocumentController {
         if (data != null && !data.isEmpty()) {
             return ResponseEntity.ok(new ApiResponse<>(200, "Thành công", data));
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ApiResponse<>(200, "Không tìm thấy user hoặc không có file", new ArrayList<>()));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, "Không tìm thấy user hoặc không có file", null));
         }
     }
 
