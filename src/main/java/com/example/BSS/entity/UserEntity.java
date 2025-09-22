@@ -126,6 +126,9 @@ public class UserEntity {
     @JsonProperty("document_number")
     private String documentNumber;
 
+    @JsonProperty("citizen")
+    private String citizen;
+
 
     public String getPlkhCode() {
         return plkhCode;
@@ -399,5 +402,13 @@ public class UserEntity {
 
     public void setMaTb(String maTb) {
         this.maTb = maTb;
+    }
+
+    public String getCitizen() {
+        return citizen;
+    }
+
+    public void setCitizen(String citizen) {
+        this.citizen = citizen;
     }
 }
