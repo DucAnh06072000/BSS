@@ -5,10 +5,7 @@ import com.example.BSS.entity.PromotionEntity;
 import com.example.BSS.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
@@ -57,27 +54,24 @@ public class UserService {
 
 
     public List<UserEntity> getUsersInCurrentQuarter() {
-        Instant now = Instant.now();
-        LocalDate today = LocalDate.ofInstant(now, ZoneId.systemDefault());
+        LocalDate today = LocalDate.now();
 
         int currentQuarter = (today.getMonthValue() - 1) / 3 + 1;
         int currentYear = today.getYear();
 
-
+        // Ngày bắt đầu quý
         int startMonth = (currentQuarter - 1) * 3 + 1;
         LocalDate startDate = LocalDate.of(currentYear, startMonth, 1);
-        Instant startInstant = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
-
+        // Ngày kết thúc quý
         int endMonth = startMonth + 2;
-        LocalDate endDate = LocalDate.of(currentYear, endMonth, YearMonth.of(currentYear, endMonth).lengthOfMonth());
-        Instant endInstant = endDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant();
-
+        LocalDate endDate = LocalDate.of(currentYear, endMonth,
+                YearMonth.of(currentYear, endMonth).lengthOfMonth());
 
         return getAllUsers().stream()
                 .filter(user -> user.getCreateAt() != null &&
-                        !user.getCreateAt().isBefore(startInstant) &&
-                        user.getCreateAt().isBefore(endInstant))
+                        !user.getCreateAt().isBefore(startDate) &&
+                        !user.getCreateAt().isAfter(endDate))
                 .collect(Collectors.toList());
     }
 
@@ -135,7 +129,7 @@ public class UserService {
             if (updateData.getPlkhCode() != null) userEntity.setPlkhCode(updateData.getPlkhCode());
             if (updateData.getPlaceResidence() != null) userEntity.setPlaceResidence(updateData.getPlaceResidence());
             if (updateData.getMaTb() != null) userEntity.setMaTb(updateData.getMaTb());
-            userEntity.setUpdateAt(Instant.now());
+            userEntity.setUpdateAt(LocalDate.now());
             return userRepository.save(userEntity);
         });
     }

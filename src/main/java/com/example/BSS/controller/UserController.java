@@ -1,31 +1,43 @@
 package com.example.BSS.controller;
 
 import com.example.BSS.entity.ApiResponse;
+import com.example.BSS.entity.ContractEntity;
+import com.example.BSS.entity.ServiceEntity;
 import com.example.BSS.entity.UserEntity;
+import com.example.BSS.service.ContractService;
+import com.example.BSS.service.ExcelService;
+import com.example.BSS.service.ServicesService;
 import com.example.BSS.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final ExcelService excelService;
+    private final ContractService contractService;
+    private final ServicesService servicesService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ExcelService excelService, ContractService contractService, ServicesService servicesService) {
         this.userService = userService;
+        this.excelService = excelService;
+        this.contractService = contractService;
+        this.servicesService = servicesService;
     }
-
 
     // lấy ra khách hàng cá nhân hoặc doanh nghiệp
     @GetMapping(value = "/getInfoContract", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,7 +50,6 @@ public class UserController {
         ApiResponse<Map<String, Long>> response = new ApiResponse<>(200, "Thành công", result);
         return ResponseEntity.ok().body(response);
     }
-
 
 
     // lấy ra khách hàng tạo trong quý này
@@ -100,7 +111,20 @@ public class UserController {
     }
 
 
-    // lấy ra danh sách ưu đãi
+    @GetMapping("/export-users")
+    public ResponseEntity<byte[]> exportUsers() throws IOException {
+        List<UserEntity> userEntities = userService.getAllUsers();
+        List<ContractEntity> contractEntities = contractService.getAllUser();
+        List<ServiceEntity> serviceEntities = servicesService.getAllService();
+        ByteArrayInputStream in = excelService.exportUserToUsers(serviceEntities,userEntities,contractEntities);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=users.xlsx");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(in.readAllBytes());
+    }
 
 
 }

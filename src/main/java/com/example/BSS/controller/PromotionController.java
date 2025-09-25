@@ -76,18 +76,6 @@ public class PromotionController {
     // các trường bắt buộc voucherCode, Description, name,DiscountAmount, TxnMinAmount,ExpirationAtVoucher
     @PostMapping(value = "/insertPromotion", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<PromotionEntity>> insertPromotion(@RequestBody PromotionEntity promotion) {
-        // Kiểm tra dữ liệu đầu vào
-        if (promotion.getVoucherCode() == null || promotion.getVoucherCode().trim().isEmpty() ||
-            promotion.getDescription() == null || promotion.getDescription().trim().isEmpty() ||
-            promotion.getName() == null || promotion.getName().trim().isEmpty() ||
-            promotion.getDiscountAmount() == null || promotion.getDiscountAmount() <= 0 ||
-            promotion.getTxnMinAmount() == null || promotion.getTxnMinAmount() <= 0 ||
-            promotion.getExpirationAtVoucher() == null || promotion.getExpirationAtVoucher().trim().isEmpty()) {
-
-            return ResponseEntity.badRequest()
-                .body(new ApiResponse<>(400, "Vui lòng nhập đầy đủ và hợp lệ thông tin", null));
-        }
-
         // Insert
         PromotionEntity insert = promotionService.insertPromotion(promotion);
 

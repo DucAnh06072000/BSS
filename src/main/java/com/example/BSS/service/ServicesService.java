@@ -20,6 +20,11 @@ public class ServicesService {
     public ServiceEntity getServiceID(String idContract) {
         return servicesRepository.findByIdContract(idContract).orElse(null);
     }
+
+    public List<ServiceEntity> getAllService() {
+        return servicesRepository.findAll();
+    }
+
     public List<ServiceEntity> getHistoryService(LocalDate startTime, LocalDate endTime) {
         if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Khoảng thời gian không hợp lệ.");

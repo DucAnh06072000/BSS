@@ -3,8 +3,6 @@ package com.example.BSS.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -34,10 +32,10 @@ public class UserEntity {
     private String serviceUsed;
 
     @JsonProperty("create_at")
-    private Instant createAt;
+    private LocalDate createAt;
 
     @JsonProperty("update_at")
-    private Instant updateAt;
+    private LocalDate updateAt;
 
     @JsonProperty("contract_status")
     private int contractStatus;
@@ -121,7 +119,7 @@ public class UserEntity {
     private String placeResidence;
 
     @JsonProperty("birthday")
-    private Instant birthday;
+    private LocalDate birthday;
 
     @JsonProperty("document_number")
     private String documentNumber;
@@ -155,11 +153,11 @@ public class UserEntity {
     }
 
 
-    public Instant getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Instant birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -204,11 +202,11 @@ public class UserEntity {
         this.serviceUsed = serviceUsed;
     }
 
-    public void setCreateAt(Instant createAt) {
+    public void setCreateAt(LocalDate createAt) {
         this.createAt = createAt;
     }
 
-    public void setUpdateAt(Instant updateAt) {
+    public void setUpdateAt(LocalDate updateAt) {
         this.updateAt = updateAt;
     }
 
@@ -308,11 +306,11 @@ public class UserEntity {
         return serviceUsed;
     }
 
-    public Instant getCreateAt() {
+    public LocalDate getCreateAt() {
         return createAt;
     }
 
-    public Instant getUpdateAt() {
+    public LocalDate getUpdateAt() {
         return updateAt;
     }
 
