@@ -70,7 +70,9 @@ public class UserController {
 
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserEntity>>> getUser() {
-        List<UserEntity> user = userService.getAllUsers();
+        List<ContractEntity> contractEntities = contractService.getAllUser();
+        List<ServiceEntity> serviceEntities = servicesService.getAllService();
+        List<UserEntity> user = userService.getFullUsersOfService(serviceEntities, contractEntities);
         if (user != null && !user.isEmpty()) {
             ApiResponse<List<UserEntity>> response = new ApiResponse<List<UserEntity>>(200, "Thành công", user);
             return ResponseEntity.ok()
@@ -116,7 +118,7 @@ public class UserController {
         List<UserEntity> userEntities = userService.getAllUsers();
         List<ContractEntity> contractEntities = contractService.getAllUser();
         List<ServiceEntity> serviceEntities = servicesService.getAllService();
-        ByteArrayInputStream in = excelService.exportUserToUsers(serviceEntities,userEntities,contractEntities);
+        ByteArrayInputStream in = excelService.exportUserToUsers(serviceEntities, userEntities, contractEntities);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=users.xlsx");
 

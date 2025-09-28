@@ -1,16 +1,15 @@
 package com.example.BSS.service;
 
 import com.example.BSS.callback.UserRepository;
+import com.example.BSS.entity.ContractEntity;
 import com.example.BSS.entity.PromotionEntity;
+import com.example.BSS.entity.ServiceEntity;
 import com.example.BSS.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +22,23 @@ public class UserService {
 
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<UserEntity> getFullUsersOfService(List<ServiceEntity> listService, List<ContractEntity> listContract) {
+        List<UserEntity> result = new ArrayList<>();
+        for (UserEntity user : getAllUsers()) {
+            for (ContractEntity contract : listContract)
+                if (contract.getUserCode().equals(user.getIdUser())) {
+                    for (ServiceEntity service : listService)
+                        if (contract.getIdContract().equals(service.getIdContract())) {
+                            user.setExpirationAt(contract.getExpiredDate());
+                            user.setServiceCode(service.getServiceName());
+                            result.add(user);
+                        }
+                }
+
+        }
+        return result;
     }
 
     public Optional<UserEntity> getCustomerById(Long id) {

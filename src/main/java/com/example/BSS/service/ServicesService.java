@@ -24,7 +24,6 @@ public class ServicesService {
     public List<ServiceEntity> getAllService() {
         return servicesRepository.findAll();
     }
-
     public List<ServiceEntity> getHistoryService(LocalDate startTime, LocalDate endTime) {
         if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Khoảng thời gian không hợp lệ.");

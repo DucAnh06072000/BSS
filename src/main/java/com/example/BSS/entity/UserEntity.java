@@ -98,6 +98,9 @@ public class UserEntity {
     @JsonProperty("expiration_at")
     private LocalDate expirationAt;
 
+    public UserEntity(UserEntity user) {
+    }
+
     public String getRole() {
         return role;
     }
